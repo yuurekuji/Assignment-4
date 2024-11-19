@@ -1,1 +1,3 @@
-println("hey");
+void setup(){
+  fullScreen();
+}
