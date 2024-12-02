@@ -4,6 +4,7 @@
 import processing.sound.*;
 SoundFile song1;
 SoundFile song2;
+SoundFile song3;
 
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
@@ -29,9 +30,10 @@ void setup() {
   ///// import sound  ///////
   ///////////////////////////
 
-  song1 = new SoundFile(this, "Title Song 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Title Song 2.wav");
-  
+  song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
+  song2 = new SoundFile(this, "Song title 2.wav");
+  song3 = new SoundFile(this, "Song title 3.wav");
+
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
   ///////////////////////////////////////////////////////////////
@@ -58,9 +60,9 @@ void draw() {
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  if (master[0] == 1) { // if the index of master at 0  is equal to 1 call the function for the title screen
+  if (master[0] == 1 && !song1.isPlaying() && !song2.isPlaying() && !song3.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
     titlescreen.display();
-    song2.play();
+    song1.play();
   }
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
