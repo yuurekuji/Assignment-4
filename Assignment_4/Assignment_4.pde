@@ -29,8 +29,8 @@ void setup() {
   ///// import sound  ///////
   ///////////////////////////
 
-  song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Song title 2.wav");
+  song1 = new SoundFile(this, "Title Song 1.wav"); // importing the songs used for the games title screen
+  song2 = new SoundFile(this, "Title Song 2.wav");
   
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
@@ -60,7 +60,7 @@ void draw() {
 
   if (master[0] == 1) { // if the index of master at 0  is equal to 1 call the function for the title screen
     titlescreen.display();
-    song1.play();
+    song2.play();
   }
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
