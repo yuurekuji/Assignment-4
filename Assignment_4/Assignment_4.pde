@@ -23,11 +23,12 @@ TitleButtons titlebuttons; // holds the buttons class
 TitleButtons music;
 TitleButtons play;
 TitleButtons controls;
-TitleButtons Exit;
+TitleButtons exit;
 
 
-int [] master = new int [1]; // this is the initilaization of the master array
-int [] titlemusic = new int [1];
+int [] master = new int [1]; // this is the initialization of the master array
+int [] titlemusic = new int [1]; // this is the initialization of the music array
+
 void setup() {
   size(900, 600);
   imageMode(CENTER);
@@ -36,7 +37,7 @@ void setup() {
   ///////////////////////////
 
   song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Song title 2.wav"); //
+  song2 = new SoundFile(this, "Song title 2.wav"); 
   song3 = new SoundFile(this, "Song title 3.wav");
 
   ///////////////////////////////////////////////////////////////
@@ -52,6 +53,9 @@ void setup() {
   npc2 = new NPC2();
 
   music = new TitleButtons (816, 514, 50, 50);
+  controls = new TitleButtons (158, 501, 120, 20);
+  play = new TitleButtons (127, 462, 60, 20);
+  exit = new TitleButtons (127, 535, 60, 20);
 
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
@@ -69,8 +73,12 @@ void draw() {
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (master[0] == 1) {
-    titlescreen.display();
+    titlescreen.display(); // display all of the items that must be shown and function in the title screen
     music.buttons();
+    controls.buttons();
+    play.buttons();
+    exit.buttons();
+
     if (titlemusic [0] == 1 && !song1.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
 
       song1.play();
@@ -140,14 +148,16 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
-  //if (master[0] ==1) {
-  //  master[0] +=1;
-  //}
+  if (master[0] ==1 & play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
+    master[0] +=1;
+  }
+  if (master [0] == 1 & exit.isMouseOver() == true) { //this is a if statement to check if the mouse is over the exit button, if it is then when mouse is pressed execute the exit() function which closes the game.
+    exit();
+  }
   if (music.isMouseOver() == true) { // this is to check if the mouse is over the music button
-        titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time. 
-    if(titlemusic[0] > 3){ // this is a if statement that checks if the music array is over 3 which is the set ammount
+    titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time.
+    if (titlemusic[0] > 3) { // this is a if statement that checks if the music array is over 3 which is the set ammount
       titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
-
     }
   }
 }
