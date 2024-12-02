@@ -11,3 +11,9 @@ void setup(){
   imageMode(CENTER);
   
 }
+
+void draw(){
+}
+
+void keyPressed(){
+}

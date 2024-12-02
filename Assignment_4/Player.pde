@@ -7,9 +7,9 @@ class Player {
   Player() {
     position = new PVector (width/2, height/2);
     playerWalk = new PImage [4]; // this sets it so that the there are 4 different sprites that will be used
-    playerWalk[0] = loadImage("");
-    playerWalk[1] = loadImage("");
-    playerWalk[2] = loadImage("");
-    playerWalk[3] = loadImage("");
+    playerWalk[0] = loadImage("Character Sprite.png");
+    playerWalk[1] = loadImage("Character Sprite Back.png");
+    playerWalk[2] = loadImage("Character Sprite Left.png");
+    playerWalk[3] = loadImage("Character Sprite Right.png");
   }
 }
