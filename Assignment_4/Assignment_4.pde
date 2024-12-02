@@ -6,13 +6,17 @@ boolean sprint = false; // this boolean is a conditional to augment the speed wh
 
 Player player;
 
+int [] master = new int [5]; // this is the initilaization of the master array 
+
 void setup(){
   size(900,600);
   imageMode(CENTER);
-  
+  player = new Player();
 }
 
 void draw(){
+  background(255); // this is to set the background as white 
+  player.display();
 }
 
 void keyPressed(){
