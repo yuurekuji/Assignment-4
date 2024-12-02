@@ -93,7 +93,7 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   }
 }
 
-void mousePressed(){
+void mousePressed(){ // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons. 
   if(master[0] ==1){
     master[0] +=1;
   }
