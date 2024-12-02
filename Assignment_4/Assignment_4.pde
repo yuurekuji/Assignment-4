@@ -66,6 +66,9 @@ void draw() {
   }
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
+     song1.stop();
+     song2.stop();
+     song3.stop();
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
