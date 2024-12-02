@@ -29,6 +29,8 @@ void setup() {
   gameover = new GameOver();
   npc1 = new NPC1();
   npc2 = new NPC2();
+  
+  restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs 
 }
 
 void restartGame() {
@@ -47,7 +49,6 @@ void draw() {
   }
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
-
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
@@ -89,5 +90,11 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   }
   if (key == 'd') {//this does the opposite of the code above by instead of changing the boolean from false to true, when the key is released the boolean shifts from true back to false
     goRight = false;
+  }
+}
+
+void mousePressed(){
+  if(master[0] ==1){
+    master[0] +=1;
   }
 }
