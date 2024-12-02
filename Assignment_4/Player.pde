@@ -15,7 +15,22 @@ class Player {
     position = new PVector (width/2, height/2); // this sets the initial position of the character which will be changed later
   }
   void display() {
-    image(playerWalk[1], position.x, position.y);
-    
+    image(playerWalk[0], position.x, position.y); // this calls the idle sprite of the charcter inbedded into the array. 
+  }
+  void displayDown() {
+    image(playerWalk[0], position.x, position.y); // this is apart of the movement code which calls the go down sprite of the character and shifts the Y value of the position p vector in a way so that the character goes up
+    position.y +=1;
+  }
+  void displayUp() {
+    image(playerWalk[1], position.x, position.y);// this is apart of the movement code which calls the go up sprite of the character and shifts the Y value of the position p vector in a way so that the character goes down
+    position.y -=1;
+  }
+  void displayLeft() {
+    image(playerWalk[2], position.x, position.y); // this is apart of the movement code which calls the go left sprite of the character and shifts the X value of the position p vector in a way so that the character goes left
+    position.x -=1;
+  }
+  void displayRight() {
+    image(playerWalk[3], position.x, position.y);// this is apart of the movement code which calls the go right sprite of the character and shifts the X value of the position p vector in a way so that the character goes right
+    position.x +=1;
   }
 }

@@ -16,8 +16,51 @@ void setup(){
 
 void draw(){
   background(255); // this is to set the background as white 
-  player.display();
+  player.display(); // this displays the character without any movement
+  if (goUp == true){
+   player.displayUp();
+    
+  }
+  if (goDown == true){
+   player.displayDown();
+    
+  }
+  if (goLeft == true){
+   player.displayLeft();
+    
+  }
+  if (goRight == true){
+   player.displayRight();
+    
+  }
+ 
 }
 
-void keyPressed(){
+void keyPressed(){ // the void keypressed holds all of the movement code and code which will shift the master array from [1] (actual gameplauy)  to [4] (menu)  
+ if(key == 'w'){
+    goUp = true;
+  }
+    if(key == 's'){
+    goDown = true;
+  }
+    if(key == 'a'){
+    goLeft = true;
+  }
+    if(key == 'd'){
+    goRight = true;
+  }
+}
+  void keyReleased(){ // the void keypressed holds all of the movement code and code which will shift the master array from [1] (actual gameplauy)  to [4] (menu)  
+ if(key == 'w'){
+    goUp = false;
+  }
+    if(key == 's'){
+    goDown = false;
+  }
+    if(key == 'a'){
+    goLeft = false;
+  }
+    if(key == 'd'){
+    goRight = false;
+  }
 }
