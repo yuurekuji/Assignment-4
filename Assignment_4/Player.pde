@@ -1,7 +1,6 @@
 class Player {
   PVector position; // this is the base postion of the player which will be augmented with the movement code
-  float speed = 1; // this is the variable which will change depending on sprinting or not, if it is not sprinting then this is the base speed at which the player will move.
-  PImage Player; //this is to initilaize the players PImage sprite that will be used
+  float speed = 1; // this is the variable which will change depending on sprinting or not, if it is not sprinting then this is the base speed at which the player will move
   PImage playerWalk[]; // this is the array that will hold all of the PImage sprites for the player movement
 
   Player() {

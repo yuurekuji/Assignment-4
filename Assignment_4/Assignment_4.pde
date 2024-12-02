@@ -1,3 +1,10 @@
+// music links
+// https://www.youtube.com/watch?v=cLX0cyh6_Ro&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
+// https://www.youtube.com/watch?v=Ddrs6FXIJ-g&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
+import processing.sound.*;
+SoundFile song1;
+SoundFile song2;
+
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
 boolean goLeft = false;
@@ -18,6 +25,13 @@ int [] master = new int [1]; // this is the initilaization of the master array
 void setup() {
   size(900, 600);
   imageMode(CENTER);
+  ///////////////////////////
+  ///// import sound  ///////
+  ///////////////////////////
+
+  song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
+  song2 = new SoundFile(this, "Song title 2.wav");
+  
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
   ///////////////////////////////////////////////////////////////
@@ -29,8 +43,8 @@ void setup() {
   gameover = new GameOver();
   npc1 = new NPC1();
   npc2 = new NPC2();
-  
-  restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs 
+
+  restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
 }
 
 void restartGame() {
@@ -46,6 +60,7 @@ void draw() {
 
   if (master[0] == 1) { // if the index of master at 0  is equal to 1 call the function for the title screen
     titlescreen.display();
+    song1.play();
   }
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
@@ -93,8 +108,8 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   }
 }
 
-void mousePressed(){ // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons. 
-  if(master[0] ==1){
+void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
+  if (master[0] ==1) {
     master[0] +=1;
   }
 }
