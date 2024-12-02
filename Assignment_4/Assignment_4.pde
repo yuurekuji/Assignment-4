@@ -19,6 +19,11 @@ BattleUI battleui; // initializes the battle ui class when you enter the battle
 GameOver gameover; // initializes the game over class
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
+TitleButtons titlebuttons; // holds the buttons class
+TitleButtons music;
+TitleButtons play;
+TitleButtons controls;
+TitleButtons Exit;
 
 
 int [] master = new int [1]; // this is the initilaization of the master array
@@ -31,7 +36,7 @@ void setup() {
   ///////////////////////////
 
   song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Song title 2.wav");
+  song2 = new SoundFile(this, "Song title 2.wav"); 
   song3 = new SoundFile(this, "Song title 3.wav");
 
   ///////////////////////////////////////////////////////////////
@@ -45,11 +50,14 @@ void setup() {
   gameover = new GameOver();
   npc1 = new NPC1();
   npc2 = new NPC2();
+  
+  play = new TitleButtons (816,514, 50,50);
+  
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
 }
 
-void restartGame() {
+void restartGame() { // this is where all of the intialization of the arrays and the variables will be located, by calling this function it theoretically will reset all of the values to a point where you can play the game again.
   master[0] = 1;
 }
 
@@ -59,18 +67,18 @@ void draw() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-if (master[0] == 1){
-  titlescreen.display();
-  if (master[0] == 1 && !song1.isPlaying() && !song2.isPlaying() && !song3.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
-    
-    song1.play();
+  if (master[0] == 1) {
+    titlescreen.display();
+    if (master[0] == 1 && !song1.isPlaying() && !song2.isPlaying() && !song3.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
+
+      song1.play();
+    }
   }
-}
   if (master [0] == 2) {
     player.display(); // this displays the character without any movement
-     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
-     song2.stop();
-     song3.stop();
+    song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
+    song2.stop();
+    song3.stop();
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
