@@ -11,12 +11,11 @@ class Player {
     playerWalk[1] = loadImage("Character Sprite Back.png");
     playerWalk[2] = loadImage("Character Sprite Left.png");
     playerWalk[3] = loadImage("Character Sprite Right.png");
-    
+
     position = new PVector (width/2, height/2); // this sets the initial position of the character which will be changed later
-    
-   
   }
-  void display(){
-    image(playerWalk[0], position.x, position.y);
+  void display() {
+    image(playerWalk[1], position.x, position.y);
+    
   }
 }
