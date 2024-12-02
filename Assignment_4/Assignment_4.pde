@@ -27,7 +27,7 @@ TitleButtons Exit;
 
 
 int [] master = new int [1]; // this is the initilaization of the master array
-
+int [] titlemusic = new int [1];
 void setup() {
   size(900, 600);
   imageMode(CENTER);
@@ -36,7 +36,7 @@ void setup() {
   ///////////////////////////
 
   song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Song title 2.wav"); 
+  song2 = new SoundFile(this, "Song title 2.wav"); //
   song3 = new SoundFile(this, "Song title 3.wav");
 
   ///////////////////////////////////////////////////////////////
@@ -50,15 +50,16 @@ void setup() {
   gameover = new GameOver();
   npc1 = new NPC1();
   npc2 = new NPC2();
-  
-  play = new TitleButtons (816,514, 50,50);
-  
+
+  music = new TitleButtons (816, 514, 50, 50);
+
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
 }
 
 void restartGame() { // this is where all of the intialization of the arrays and the variables will be located, by calling this function it theoretically will reset all of the values to a point where you can play the game again.
   master[0] = 1;
+  titlemusic[0] = 1;
 }
 
 void draw() {
@@ -69,9 +70,24 @@ void draw() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (master[0] == 1) {
     titlescreen.display();
-    if (master[0] == 1 && !song1.isPlaying() && !song2.isPlaying() && !song3.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
+    music.buttons();
+    if (titlemusic [0] == 1 && !song1.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
 
       song1.play();
+      song2.stop();
+      song3.stop();
+    }
+    if (titlemusic [0] == 2 && !song2.isPlaying() ) { // if the index of tilemusic at 0  is equal to 2 call the function for the title screen, the && !song2.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
+
+      song2.play();
+      song1.stop();
+      song3.stop();
+    }
+    if (titlemusic [0] == 3 && !song3.isPlaying()) { // if the index of titlemusic at 0  is equal to 3 call the function for the title screen, the && !song3.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
+
+      song3.play();
+      song1.stop();
+      song2.stop();
     }
   }
   if (master [0] == 2) {
@@ -124,7 +140,14 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
-  if (master[0] ==1) {
-    master[0] +=1;
+  //if (master[0] ==1) {
+  //  master[0] +=1;
+  //}
+  if (music.isMouseOver() == true) { // this is to check if the mouse is over the music button
+        titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time. 
+    if(titlemusic[0] > 3){ // this is a if statement that checks if the music array is over 3 which is the set ammount
+      titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
+
+    }
   }
 }
