@@ -18,6 +18,8 @@ boolean isMenuOpen = false; // this is a boolean to check if the menu is open or
 boolean isDropMenuOpen = false; // this is a boolean to check if the dropmenu is open or closed. it will switch on and off depending on where it is in the game
 boolean isClickPrompt = false; // this is a boolean to check if the click prompt is open or closed. it will switch on and off depending on if needed.
 
+
+
 Player player; // intialization of the player class which holds the sprites of the player
 TitleScreen titlescreen; //initialization of the titlescreen class which holds everything in the title screen
 Menu menu; //intializes the menu class when you click escape
@@ -48,6 +50,9 @@ int [] dungeonRooms = new int [1]; // this intializaes the dungeon rooms
 void setup() {
   size(900, 600);
   imageMode(CENTER);
+
+
+
   ///////////////////////////
   ///// import sound  ///////
   ///////////////////////////
@@ -94,6 +99,7 @@ void restartGame() { // this is where all of the intialization of the arrays and
   dungeonRooms [0] = 0;
 }
 
+
 void draw() {
   background(230); // this is to set the background as white
 
@@ -106,6 +112,7 @@ void draw() {
     controls.buttons();
     play.buttons();
     exit.buttons();
+    restartGame();
 
     if (titlemusic [0] == 1 && !song1.isPlaying()) { // if the index of master at 0  is equal to 1 call the function for the title screen, the && !song1.isPlaying() is to make sure that when the song is playing it does not play again in the next frame causing errors and sound issues.
 
@@ -126,6 +133,36 @@ void draw() {
       song2.stop();
     }
   }
+  //add the starting text which appears in text boxes this should be only activated while inside the conditional that the master [0] == 2;
+  if (startText[0] == 1 && dungeonRooms [0] == 0) { // this is a if statement checking the value of the index
+    starttext.display1(); // this function call displays the text box when the check goes through
+    isClickPrompt = false;
+  }
+  if (startText[0] ==2 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
+    starttext.display2();// this function call displays the text box when the check goes through
+    isClickPrompt = false;
+  }
+  if (startText[0] ==3 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
+    starttext.display3();// this function call displays the text box when the check goes through
+    isClickPrompt = false;
+  }
+  if (startText[0] ==4 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
+    starttext.display4();// this function call displays the text box when the check goes through
+    isClickPrompt = false;
+  }
+  if (startText[0] ==5 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
+    starttext.display5();// this function call displays the text box when the check goes through
+    isClickPrompt = false;
+  }
+  if (startText[0] > 5 && dungeonRooms [0] == 0 && master[0] != 1) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
+    isClickPrompt = false;
+    starttext.prompt();
+    dungeon.display0();
+  }
+  if (isClickPrompt == true) { // this checks if the boolean is true and then runs the click prompt code
+    starttext.click();
+  }
+
   if (master [0] == 2 && isDropMenuOpen == false) { // this checks if the master array is at 2 and if the drop menu is closed, if it is then the code may proceed, this ensures that if the menu is open, the player will not move around if they press buttons and only after exiting will they move
     player.display(); // this displays the character without any movement
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
@@ -134,9 +171,9 @@ void draw() {
 
     isClickPrompt = true;
 
-    
-    if (!wind.isPlaying()){ // makes sure the sfx does not overlap multiple times.
-     wind.play();
+
+    if (!wind.isPlaying()) { // makes sure the sfx does not overlap multiple times.
+      wind.play();
     }
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
@@ -150,37 +187,8 @@ void draw() {
     if (goRight == true) {// the if statement checks if the boolean for going right is true, then will call the function for the movement which in in the player class.
       player.displayRight();
     }
-    // (check if clickPrompt is true or not)
+  }
 
-    //add the starting text which appears in text boxes this should be only activated while inside the conditional that the master [0] == 2;
-    if (startText[0] == 1 && dungeonRooms [0] == 0) { // this is a if statement checking the value of the index
-      starttext.display1(); // this function call displays the text box when the check goes through
-      isClickPrompt = false;
-    }
-    if (startText[0] ==2 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
-      starttext.display2();// this function call displays the text box when the check goes through
-      isClickPrompt = false;
-    }
-    if (startText[0] ==3 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
-      starttext.display3();// this function call displays the text box when the check goes through
-      isClickPrompt = false;
-    }
-    if (startText[0] ==4 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
-      starttext.display4();// this function call displays the text box when the check goes through
-      isClickPrompt = false;
-    }
-    if (startText[0] ==5 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
-      starttext.display5();// this function call displays the text box when the check goes through
-      isClickPrompt = false;
-    }
-    if (startText[0] > 5 && dungeonRooms [0] == 0) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
-      isClickPrompt = false;
-      starttext.prompt();
-    }
-  }
-  if (isClickPrompt == true) { // this checks if the boolean is true and then runs the click prompt code
-    starttext.click();
-  }
   if (isDropMenuOpen == true && master[0] == 2) { // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
     menu.display();
     Dropexit.buttons();
@@ -230,9 +238,9 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
 
 
-//////////////////////////////
-///// title screen ///////////
-/////////////////////////////
+  //////////////////////////////
+  ///// title screen ///////////
+  /////////////////////////////
 
   if (master[0] == 1 && play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
     master[0] = 2;
@@ -249,12 +257,12 @@ void mousePressed() { // this houses all of the button presses which will prompt
       titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
     }
   }
-  
+
   /////////////////////////////
   ////// when in game   ////////
   //////////////////////////////
-  
-  
+
+
   if (master [0] == 2 && isDropMenuOpen == true && DropMainMenu.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
     master [0] = 1; // this sets the master array back to the main menu
     isDropMenuOpen = false; // this changes the boolean for the drop menu to be false so that when the player clicks play again the drop menu is not still open.

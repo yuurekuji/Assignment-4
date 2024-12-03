@@ -9,5 +9,7 @@ class TitleScreen {
   void display() { // this is the function that will be called when the game begins to display the screen
 
     image(Screen, width/2, height/2); // this is the title screen itself
+    
   }
+  
 }
