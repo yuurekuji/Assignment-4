@@ -2,7 +2,7 @@
 // https://www.youtube.com/watch?v=cLX0cyh6_Ro&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=Ddrs6FXIJ-g&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=3zt40gdtW1M
-// https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5
+// https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5 by tim beek
 
 // asset links
 // https://bkx1.itch.io/combat-rpg-1000k-characters
@@ -50,6 +50,9 @@ Buttons DropMainMenu;
 
 Buttons proceedPopup;
 
+Buttons Npc1;
+Buttons Npc2;
+Buttons Npc3;
 
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
@@ -87,6 +90,10 @@ void setup() {
   npc1 = new NPC1();
   npc2 = new NPC2();
 
+  ///////////////////////////////////
+  ////// create the buttons   ///////
+  ///////////////////////////////////
+
   music = new Buttons (816, 514, 50, 50); //These are the "fake" buttons which exist but are hidden from the player, they use the Pos and Size0
   controls = new Buttons (158, 501, 120, 20);
   play = new Buttons (127, 462, 60, 20);
@@ -101,6 +108,9 @@ void setup() {
 
   proceedPopup = new Buttons(615, 160, 120, 40); // button for the popup for proceed in dungeon 0
 
+  Npc1 = new Buttons(338, 338, 60, 80);
+  Npc2 = new Buttons(584, 464, 70, 80);
+  Npc3 = new Buttons(626, 167, 90, 85);
 
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
@@ -147,6 +157,11 @@ void draw() {
       song2.stop();
     }
   }
+
+  ////////////////////////////////////
+  /////// dungeon code ///////////////
+  ////////////////////////////////////
+
   //add the starting text which appears in text boxes this should be only activated while inside the conditional that the master [0] == 2;
   if (startText[0] == 1 && dungeonRooms [0] == 0) { // this is a if statement checking the value of the index
     starttext.display1(); // this function call displays the text box when the check goes through
@@ -172,6 +187,12 @@ void draw() {
     isClickPrompt = false;
     starttext.prompt();
     dungeon.display0();
+
+    Npc1.buttons(); // these show the buttons make sure in the mouse pressed area to make Npc3 have an extra conditiona checking if the dungeon.isPopupOpen is open, if it is then do not let the player click.
+    Npc2.buttons();// these show the buttons make sure in the mouse pressed area to make Npc3 have an extra conditiona checking if the dungeon.isPopupOpen is open, if it is then do not let the player click.
+    Npc3.buttons(); // these show the buttons make sure in the mouse pressed area to make Npc3 have an extra conditiona checking if the dungeon.isPopupOpen is open, if it is then do not let the player click.
+
+
     if (dungeon.isPopupOpen == true) { // this is the if statement to check if the boolean created inside the dungeon class is true, if it is then
       proceedPopup.buttons();
     }
@@ -180,14 +201,23 @@ void draw() {
     starttext.click();
   }
 
+  ////////////////////////////////////////////
+  ////////////   during play /////////////////
+  ////////////////////////////////////////////
+
   if (master [0] == 2 && isDropMenuOpen == false) { // this checks if the master array is at 2 and if the drop menu is closed, if it is then the code may proceed, this ensures that if the menu is open, the player will not move around if they press buttons and only after exiting will they move
     player.display(); // this displays the character without any movement
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
     song2.stop();
     song3.stop();
-
     isClickPrompt = true;
-
+    
+    if (dist(player.position.x, player.position.y, dungeon.gatePos.x, dungeon.gatePos.y) < 60 ) {
+      dungeon.isPopupOpen = true;
+    }
+    if (dist(player.position.x, player.position.y, dungeon.gatePos.x, dungeon.gatePos.y) > 60 ) {
+      dungeon.isPopupOpen = false;
+    }
 
     if (!wind.isPlaying() && !dungeon0.isPlaying()) { // makes sure the sfx does not overlap multiple times.
       wind.play();
