@@ -24,11 +24,13 @@ GameOver gameover; // initializes the game over class
 Controls controlmenu;
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
+StartText starttext; // holds all of the starting text in the game
 Buttons titlebuttons; // holds the buttons class
 Buttons music;
 Buttons play;
 Buttons controls;
 Buttons exit;
+
 
 Buttons Dropcontrols; // these are the buttons in the drop down menu when you click tab
 Buttons Dropexit;
@@ -37,6 +39,7 @@ Buttons DropMainMenu;
 
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
+int [] startText = new int [1];
 
 void setup() {
   size(900, 600);
@@ -199,7 +202,7 @@ void mousePressed() { // this houses all of the button presses which will prompt
   }
   if (master [0] == 2 && isDropMenuOpen == true && Dropcontrols.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
     isMenuOpen = !isMenuOpen;
-    isDropMenuOpen = false;
+    isDropMenuOpen = false; // close the menu behind so that when you click on tab it does not clear both
 
   }
   if (master [0] == 2 && isDropMenuOpen == true && Dropexit.isMouseOver() == true) { // this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
