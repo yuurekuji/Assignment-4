@@ -20,6 +20,7 @@ TitleScreen titlescreen; //initialization of the titlescreen class which holds e
 Menu menu; //intializes the menu class when you click escape
 BattleUI battleui; // initializes the battle ui class when you enter the battle
 GameOver gameover; // initializes the game over class
+Controls controlmenu;
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
 TitleButtons titlebuttons; // holds the buttons class
@@ -52,6 +53,7 @@ void setup() {
   menu = new Menu();
   battleui = new BattleUI();
   gameover = new GameOver();
+  controlmenu = new Controls();
   npc1 = new NPC1();
   npc2 = new NPC2();
 
@@ -119,12 +121,8 @@ void draw() {
       player.displayRight();
     }
   }
-  if (master [0] == 3) { // the if statement checks if the master array index value [0] is at 3 and then runs based off of that.
-    menu.display(); // this displays the menu
-    isMenuOpen = !isMenuOpen;
-    if (key == TAB) { // this checks if the key tab is clicked and if the boolean is true 
-      master [0] = 1; // this needs some work
-    }
+  if (isMenuOpen == true) { // the if statement checks if the master array index value [0] is at 3 and then runs based off of that.
+    controlmenu.display(); // this displays the menu
   }
 }
 
@@ -155,6 +153,9 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   if (key == 'd') {//this does the opposite of the code above by instead of changing the boolean from false to true, when the key is released the boolean shifts from true back to false
     goRight = false;
   }
+  if (key == TAB) { // this checks if the key tab is clicked and if the boolean is true
+    isMenuOpen = false; // this turns the isMenuOpen Boolean to false to close the tab
+  }
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
@@ -165,7 +166,7 @@ void mousePressed() { // this houses all of the button presses which will prompt
     exit();
   }
   if (master [0] == 1 & controls.isMouseOver() == true) {
-    master [0] = 3;
+    isMenuOpen = true;
   }
   if (music.isMouseOver() == true) { // this is to check if the mouse is over the music button
     titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time.
