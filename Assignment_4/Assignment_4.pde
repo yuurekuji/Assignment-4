@@ -25,6 +25,7 @@ Controls controlmenu;
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
 StartText starttext; // holds all of the starting text in the game
+Dungeon dungeon;
 Buttons titlebuttons; // holds the buttons class
 Buttons music;
 Buttons play;
@@ -39,7 +40,8 @@ Buttons DropMainMenu;
 
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
-int [] startText = new int [1];
+int [] startText = new int [1]; // this is the initialization of the starting text boxes
+int [] dungeonRooms = new int [1]; // this intializaes the
 
 void setup() {
   size(900, 600);
@@ -74,6 +76,9 @@ void setup() {
   Dropcontrols = new Buttons (460, 225, 240, 50);
   Dropexit = new Buttons (460, 315, 240, 50);
 
+  starttext = new StartText ();
+  dungeon = new Dungeon();
+
 
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
@@ -82,10 +87,12 @@ void setup() {
 void restartGame() { // this is where all of the intialization of the arrays and the variables will be located, by calling this function it theoretically will reset all of the values to a point where you can play the game again.
   master[0] = 1;
   titlemusic[0] = 1;
+  startText [0] = -1;
+  dungeonRooms [0] = 0;
 }
 
 void draw() {
-  background(255); // this is to set the background as white
+  background(230); // this is to set the background as white
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
@@ -121,6 +128,8 @@ void draw() {
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
     song2.stop();
     song3.stop();
+
+
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
@@ -133,7 +142,24 @@ void draw() {
     if (goRight == true) {// the if statement checks if the boolean for going right is true, then will call the function for the movement which in in the player class.
       player.displayRight();
     }
+    //add the starting text which appears in text boxes this should be only activated while inside the conditional that the master [0] == 2;
+    if (startText[0] == 1) { // this is a if statement checking the value of the index
+      starttext.display1(); // this function call displays the text box when the check goes through
+    }
+    if (startText[0] ==2) {// this is a if statement checking the value of the index
+      starttext.display2();// this function call displays the text box when the check goes through
+    }
+    if (startText[0] ==3) {// this is a if statement checking the value of the index
+      starttext.display3();// this function call displays the text box when the check goes through
+    }
+    if (startText[0] ==4) {// this is a if statement checking the value of the index
+      starttext.display4();// this function call displays the text box when the check goes through
+    }
+    if (startText[0] ==5) {// this is a if statement checking the value of the index
+      starttext.display5();// this function call displays the text box when the check goes through
+    }
   }
+
   if (isDropMenuOpen == true && master[0] == 2) { // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
     menu.display();
     Dropexit.buttons();
@@ -203,9 +229,13 @@ void mousePressed() { // this houses all of the button presses which will prompt
   if (master [0] == 2 && isDropMenuOpen == true && Dropcontrols.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
     isMenuOpen = !isMenuOpen;
     isDropMenuOpen = false; // close the menu behind so that when you click on tab it does not clear both
-
   }
   if (master [0] == 2 && isDropMenuOpen == true && Dropexit.isMouseOver() == true) { // this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
     exit(); //this exits out of the game.
   }
+
+  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false) { // this is a if statement checking if the actual game is running, and then if the menus are off. 
+    startText[0] += 1;// sets the starting text [0] to +=1 each time pressed to intialize and continue starting text function
+  }
+
 }

@@ -15,12 +15,12 @@ class StartText{
     image(starttext[1], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
   }
   void display3(){
-    image(starttext[3], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
+    image(starttext[2], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
   }
   void display4(){
-    image(starttext[4], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
+    image(starttext[3], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
   }
   void display5(){
-    image(starttext[5], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
+    image(starttext[4], width/2, height/2);// this is the function that will display the text box which will be called in the main code.
   }
 }

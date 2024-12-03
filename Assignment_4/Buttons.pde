@@ -12,7 +12,7 @@ class Buttons {
     fill(255, 255, 255, 0);
     rect(pos.x, pos.y, size.x, size.y);
   }
-  boolean isMouseOver() {
+  boolean isMouseOver() { // this is a boolean function which is called in if statements in the main code to check if the mouses position is over the button. If it is ture then this boolean will be changed accordingly in the conditionals
     return (mouseX > pos.x -  size.x /2 && mouseX < pos.x + size.x/2 && mouseY > pos.y -  size.y /2 && mouseY < pos.y + size.y/2); // this is to check if the mouse is over the buttons using the size and pos variables I declared since each is specifically mapped to a location
   }
 }
