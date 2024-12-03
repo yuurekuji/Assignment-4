@@ -14,6 +14,7 @@ boolean goLeft = false;
 boolean goRight = false;
 boolean sprint = false;// this boolean is a conditional to augment the speed which the player can move when they press a certain key while moving, it is set to false right now to ensure that the players speed is normal and only when pressing the key will the player be able to "sprint"
 boolean isMenuOpen = false; // this is a boolean to check if the menu is open or closed. it will switch on and off depending on where it is in the game
+boolean isDropMenuOpen = false; // this is a boolean to check if the dropmenu is open or closed. it will switch on and off depending on where it is in the game
 
 Player player; // intialization of the player class which holds the sprites of the player
 TitleScreen titlescreen; //initialization of the titlescreen class which holds everything in the title screen
@@ -103,7 +104,7 @@ void draw() {
       song2.stop();
     }
   }
-  if (master [0] == 2) {
+  if (master [0] == 2 && isDropMenuOpen == false) { // this checks if the master array is at 2 and if the drop menu is closed, if it is then the code may proceed, this ensures that if the menu is open, the player will not move around if they press buttons and only after exiting will they move
     player.display(); // this displays the character without any movement
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
     song2.stop();
@@ -120,6 +121,9 @@ void draw() {
     if (goRight == true) {// the if statement checks if the boolean for going right is true, then will call the function for the movement which in in the player class.
       player.displayRight();
     }
+  }
+  if (isDropMenuOpen == true && master[0] == 2){ // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
+    menu.display();
   }
   if (isMenuOpen == true) { // the if statement checks if the master array index value [0] is at 3 and then runs based off of that.
     controlmenu.display(); // this displays the menu
@@ -153,25 +157,31 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   if (key == 'd') {//this does the opposite of the code above by instead of changing the boolean from false to true, when the key is released the boolean shifts from true back to false
     goRight = false;
   }
-  if (key == TAB) { // this checks if the key tab is clicked and if the boolean is true
+  if (key == TAB && master[0] == 1) { // this checks if the key tab is clicked and if the boolean is true
     isMenuOpen = false; // this turns the isMenuOpen Boolean to false to close the tab
   }
+  if(key == TAB && master[0] == 2){// this checks if the key tab is clicked and if the boolean is true
+    isDropMenuOpen = !isDropMenuOpen;// this turns the isDropMenuOpen Boolean to the opposite to close or open the tab
+  }
+
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
-  if (master[0] ==1 & play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
+  if (master[0] == 1 && play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
     master[0] = 2;
   }
-  if (master [0] == 1 & exit.isMouseOver() == true) { //this is a if statement to check if the mouse is over the exit button, if it is then when mouse is pressed execute the exit() function which closes the game.
+  if (master [0] == 1 && exit.isMouseOver() == true) { //this is a if statement to check if the mouse is over the exit button, if it is then when mouse is pressed execute the exit() function which closes the game.
     exit();
   }
-  if (master [0] == 1 & controls.isMouseOver() == true) {
+  if (master [0] == 1 && controls.isMouseOver() == true) { // this is a if statement checking if the master array is in the menu and if the mouse is over the controls button. if it is then run execute and turn the isMenuOpen boolean to true to turn on the menu.
     isMenuOpen = true;
   }
-  if (music.isMouseOver() == true) { // this is to check if the mouse is over the music button
+  if (master[0] == 1 && music.isMouseOver() == true) { // this is to check if the mouse is over the music button
     titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time.
     if (titlemusic[0] > 3) { // this is a if statement that checks if the music array is over 3 which is the set ammount
       titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
     }
   }
+  
+  if (master [0] == 2 && isDropMenuOpen == true && 
 }
