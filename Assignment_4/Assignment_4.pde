@@ -15,6 +15,7 @@ boolean goRight = false;
 boolean sprint = false;// this boolean is a conditional to augment the speed which the player can move when they press a certain key while moving, it is set to false right now to ensure that the players speed is normal and only when pressing the key will the player be able to "sprint"
 boolean isMenuOpen = false; // this is a boolean to check if the menu is open or closed. it will switch on and off depending on where it is in the game
 boolean isDropMenuOpen = false; // this is a boolean to check if the dropmenu is open or closed. it will switch on and off depending on where it is in the game
+boolean isClickPrompt = false; // this is a boolean to check if the click prompt is open or closed. it will switch on and off depending on if needed.
 
 Player player; // intialization of the player class which holds the sprites of the player
 TitleScreen titlescreen; //initialization of the titlescreen class which holds everything in the title screen
@@ -41,7 +42,7 @@ Buttons DropMainMenu;
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
 int [] startText = new int [1]; // this is the initialization of the starting text boxes
-int [] dungeonRooms = new int [1]; // this intializaes the
+int [] dungeonRooms = new int [1]; // this intializaes the dungeon rooms
 
 void setup() {
   size(900, 600);
@@ -129,6 +130,7 @@ void draw() {
     song2.stop();
     song3.stop();
 
+    isClickPrompt = true;
 
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
@@ -142,24 +144,36 @@ void draw() {
     if (goRight == true) {// the if statement checks if the boolean for going right is true, then will call the function for the movement which in in the player class.
       player.displayRight();
     }
+    // (check if clickPrompt is true or not)
+
     //add the starting text which appears in text boxes this should be only activated while inside the conditional that the master [0] == 2;
-    if (startText[0] == 1) { // this is a if statement checking the value of the index
+    if (startText[0] == 1 && dungeonRooms [0] == 0) { // this is a if statement checking the value of the index
       starttext.display1(); // this function call displays the text box when the check goes through
+      isClickPrompt = false;
     }
-    if (startText[0] ==2) {// this is a if statement checking the value of the index
+    if (startText[0] ==2 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
       starttext.display2();// this function call displays the text box when the check goes through
+      isClickPrompt = false;
     }
-    if (startText[0] ==3) {// this is a if statement checking the value of the index
+    if (startText[0] ==3 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
       starttext.display3();// this function call displays the text box when the check goes through
+      isClickPrompt = false;
     }
-    if (startText[0] ==4) {// this is a if statement checking the value of the index
+    if (startText[0] ==4 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
       starttext.display4();// this function call displays the text box when the check goes through
+      isClickPrompt = false;
     }
-    if (startText[0] ==5) {// this is a if statement checking the value of the index
+    if (startText[0] ==5 && dungeonRooms [0] == 0) {// this is a if statement checking the value of the index
       starttext.display5();// this function call displays the text box when the check goes through
+      isClickPrompt = false;
+    }
+    if (startText[0] > 5 && dungeonRooms [0] == 0) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
+      isClickPrompt = false;
     }
   }
-
+  if (isClickPrompt == true) { // this checks if the boolean is true and then runs the click prompt code
+    starttext.click();
+  }
   if (isDropMenuOpen == true && master[0] == 2) { // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
     menu.display();
     Dropexit.buttons();
@@ -234,8 +248,7 @@ void mousePressed() { // this houses all of the button presses which will prompt
     exit(); //this exits out of the game.
   }
 
-  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false) { // this is a if statement checking if the actual game is running, and then if the menus are off. 
+  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0) { // this is a if statement checking if the actual game is running, and then if the menus are off.
     startText[0] += 1;// sets the starting text [0] to +=1 each time pressed to intialize and continue starting text function
   }
-
 }
