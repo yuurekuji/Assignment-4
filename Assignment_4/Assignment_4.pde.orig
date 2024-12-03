@@ -131,13 +131,16 @@ void draw() {
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
     song2.stop();
     song3.stop();
+<<<<<<< HEAD
 
     isClickPrompt = true;
 
+=======
     
     if (!wind.isPlaying()){ // makes sure the sfx does not overlap multiple times.
      wind.play();
     }
+>>>>>>> main
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
