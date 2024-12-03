@@ -59,6 +59,14 @@ int [] titlemusic = new int [1]; // this is the initialization of the music arra
 int [] startText = new int [1]; // this is the initialization of the starting text boxes
 int [] dungeonRooms = new int [1]; // this intializaes the dungeon rooms
 
+//////////////////
+//   NPC text ////
+//////////////////
+
+int [] NPC1 = new int [1];
+int [] NPC2 = new int [1];
+int [] NPC3 = new int [1];
+
 void setup() {
   size(900, 600);
   imageMode(CENTER);
@@ -89,6 +97,7 @@ void setup() {
   controlmenu = new Controls();
   npc1 = new NPC1();
   npc2 = new NPC2();
+  npc3 = new NPC3();
 
   ///////////////////////////////////
   ////// create the buttons   ///////
@@ -117,10 +126,20 @@ void setup() {
 }
 
 void restartGame() { // this is where all of the intialization of the arrays and the variables will be located, by calling this function it theoretically will reset all of the values to a point where you can play the game again.
+
+
   master[0] = 1;
 
   startText [0] = -1;
   dungeonRooms [0] = 0;
+
+  /////////////////////////
+  // npc inital values  ///
+  /////////////////////////
+
+  NPC1 [0] = 0;
+  NPC2 [0] = 0;
+  NPC3 [0] = 0;
 }
 
 
@@ -211,7 +230,7 @@ void draw() {
     song2.stop();
     song3.stop();
     isClickPrompt = true;
-    
+
     if (dist(player.position.x, player.position.y, dungeon.gatePos.x, dungeon.gatePos.y) < 60 ) {
       dungeon.isPopupOpen = true;
     }
@@ -235,6 +254,60 @@ void draw() {
     if (goRight == true) {// the if statement checks if the boolean for going right is true, then will call the function for the movement which in in the player class.
       player.displayRight();
     }
+  }
+
+  if (dungeonRooms[0] == 1) {
+    dungeon0.stop();
+  }
+
+  /////////////////////////
+  ////// NPC 1   //////////
+  /////////////////////////
+
+  if (dungeonRooms[0] == 0 && NPC1[0] == 1) {
+    npc1.display1();
+  }
+  if (dungeonRooms[0] == 0 && NPC1[0] == 2) {
+    npc1.display2();
+  }
+  if (dungeonRooms[0] == 0 && NPC1[0] == 3) {
+    npc1.display3();
+  }
+  if (dungeonRooms[0] == 0 && NPC1[0] > 3) {
+    NPC1[0] = 0;
+  }
+  /////////////////////////
+  ////// NPC 2   //////////
+  /////////////////////////
+
+  if (dungeonRooms[0] == 0 && NPC2[0] == 1) {
+    npc2.display1();
+  }
+  if (dungeonRooms[0] == 0 && NPC2[0] == 2) {
+    npc2.display2();
+  }
+  if (dungeonRooms[0] == 0 && NPC2[0] > 2) {
+    NPC2[0] = 0;
+  }
+
+  /////////////////////////
+  ////// NPC 3   //////////
+  /////////////////////////
+
+  if (dungeonRooms[0] == 0 && NPC3[0] == 1) {
+    npc3.display1();
+  }
+  if (dungeonRooms[0] == 0 && NPC3[0] == 2) {
+    npc3.display2();
+  }
+  if (dungeonRooms[0] == 0 && NPC3[0] == 3) {
+    npc3.display3();
+  }
+  if (dungeonRooms[0] == 0 && NPC3[0] == 4) {
+    npc3.display4();
+  }
+  if (dungeonRooms[0] == 0 && NPC3[0] > 4) {
+    NPC3[0] = 0;
   }
 
   if (isDropMenuOpen == true && master[0] == 2) { // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
@@ -328,5 +401,29 @@ void mousePressed() { // this houses all of the button presses which will prompt
   }
   if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0 && dungeon.isPopupOpen == true && proceedPopup.isMouseOver() == true) { // if statement checking if the actual game is running, and then if the menus are off. It then checks if the isPopupOpen boolean is true and the mouse is over
     dungeonRooms[0] = 1; // if the conditional is true, then proceed with changing the value of the array which will change where the character is.
+  }
+
+  //////////////////////////////
+  //////// npc 1 ///////////////
+  //////////////////////////////
+
+  if (dungeonRooms [0] == 0 && Npc1.isMouseOver()==true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
+    NPC1[0] += 1;
+  }
+
+  //////////////////////////////
+  //////// npc 2 ///////////////
+  //////////////////////////////
+
+  if (dungeonRooms [0] == 0 && Npc2.isMouseOver()==true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
+    NPC2[0] += 1;
+  }
+
+  //////////////////////////////
+  //////// npc 3 ///////////////
+  //////////////////////////////
+
+  if (dungeonRooms [0] == 0 && Npc3.isMouseOver()==true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
+    NPC3[0] += 1;
   }
 }

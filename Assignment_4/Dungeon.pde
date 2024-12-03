@@ -3,6 +3,8 @@ class Dungeon {
   PImage rooms []; // PImage array of the rooms
   PImage popup; // PImage of the proceed popup
 
+
+
   PVector gatePos; // position pvector of the gate
   PVector pos; //position for the dungeon screens
   boolean isPopupOpen;
