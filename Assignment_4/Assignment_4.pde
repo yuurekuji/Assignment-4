@@ -169,6 +169,7 @@ void draw() {
     }
     if (startText[0] > 5 && dungeonRooms [0] == 0) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
       isClickPrompt = false;
+      starttext.prompt();
     }
   }
   if (isClickPrompt == true) { // this checks if the boolean is true and then runs the click prompt code
