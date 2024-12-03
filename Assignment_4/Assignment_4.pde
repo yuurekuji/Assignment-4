@@ -24,11 +24,15 @@ GameOver gameover; // initializes the game over class
 Controls controlmenu;
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
-TitleButtons titlebuttons; // holds the buttons class
-TitleButtons music;
-TitleButtons play;
-TitleButtons controls;
-TitleButtons exit;
+Buttons titlebuttons; // holds the buttons class
+Buttons music;
+Buttons play;
+Buttons controls;
+Buttons exit;
+
+Buttons Dropcontrols; // these are the buttons in the drop down menu when you click tab
+Buttons Dropexit;
+Buttons DropMainMenu;
 
 
 int [] master = new int [1]; // this is the initialization of the master array
@@ -58,10 +62,15 @@ void setup() {
   npc1 = new NPC1();
   npc2 = new NPC2();
 
-  music = new TitleButtons (816, 514, 50, 50); //These are the "fake" buttons which exist but are hidden from the player, they use the Pos and Size0
-  controls = new TitleButtons (158, 501, 120, 20);
-  play = new TitleButtons (127, 462, 60, 20);
-  exit = new TitleButtons (127, 535, 60, 20);
+  music = new Buttons (816, 514, 50, 50); //These are the "fake" buttons which exist but are hidden from the player, they use the Pos and Size0
+  controls = new Buttons (158, 501, 120, 20);
+  play = new Buttons (127, 462, 60, 20);
+  exit = new Buttons (127, 535, 60, 20);
+
+  DropMainMenu = new Buttons (460, 120, 240, 50);
+  Dropcontrols = new Buttons (460, 225, 240, 50);
+  Dropexit = new Buttons (460, 315, 240, 50);
+
 
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
@@ -122,10 +131,13 @@ void draw() {
       player.displayRight();
     }
   }
-  if (isDropMenuOpen == true && master[0] == 2){ // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
+  if (isDropMenuOpen == true && master[0] == 2) { // this if statements checks if the drop menu boolean is true and the game state is in the master array 2 then will execute, ensures that players do not open menu during combat and other areas
     menu.display();
+    Dropexit.buttons();
+    Dropcontrols.buttons();
+    DropMainMenu.buttons();
   }
-  if (isMenuOpen == true) { // the if statement checks if the master array index value [0] is at 3 and then runs based off of that.
+  if (isMenuOpen == true) { // the if statement checks if the isMenuOpen boolean is true and then runs based off of that.
     controlmenu.display(); // this displays the menu
   }
 }
@@ -157,13 +169,12 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
   if (key == 'd') {//this does the opposite of the code above by instead of changing the boolean from false to true, when the key is released the boolean shifts from true back to false
     goRight = false;
   }
-  if (key == TAB && master[0] == 1) { // this checks if the key tab is clicked and if the boolean is true
+  if (key == TAB && isMenuOpen == true) { // this checks if the key tab is clicked and if the boolean is true
     isMenuOpen = false; // this turns the isMenuOpen Boolean to false to close the tab
   }
-  if(key == TAB && master[0] == 2){// this checks if the key tab is clicked and if the boolean is true
+  if (key == TAB && master[0] == 2) {// this checks if the key tab is clicked and if the boolean is true
     isDropMenuOpen = !isDropMenuOpen;// this turns the isDropMenuOpen Boolean to the opposite to close or open the tab
   }
-
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
@@ -182,6 +193,16 @@ void mousePressed() { // this houses all of the button presses which will prompt
       titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
     }
   }
-  
-  if (master [0] == 2 && isDropMenuOpen == true && 
+  if (master [0] == 2 && isDropMenuOpen == true && DropMainMenu.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
+    master [0] = 1; // this sets the master array back to the main menu
+    isDropMenuOpen = false; // this changes the boolean for the drop menu to be false so that when the player clicks play again the drop menu is not still open.
+  }
+  if (master [0] == 2 && isDropMenuOpen == true && Dropcontrols.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
+    isMenuOpen = !isMenuOpen;
+    isDropMenuOpen = false;
+
+  }
+  if (master [0] == 2 && isDropMenuOpen == true && Dropexit.isMouseOver() == true) { // this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
+    exit(); //this exits out of the game.
+  }
 }

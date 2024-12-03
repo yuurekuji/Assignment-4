@@ -1,10 +1,10 @@
-class TitleButtons {
+class Buttons {
   PVector pos;
   PVector size;
 
-  TitleButtons (int x, int y, int w, int h) {  // this is to make the buttons, however I will make each button invisible in the title screen as the PImage already has the aesthetics
+  Buttons (int x, int y, int w, int h) {  // this is to make the buttons, however I will make each button invisible in the screens as the PImage already has the aesthetics already
     pos = new PVector (x, y); // pos is used as the posiiton of the button
-    size = new PVector (w, h);
+    size = new PVector (w, h); // size is the size of the hidden button
   }
   void buttons() { // this is the function to draw the buttons, the rect uses both pos and size in order to have dynamic buttons
     rectMode(CENTER);
