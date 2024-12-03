@@ -2,12 +2,15 @@
 // https://www.youtube.com/watch?v=cLX0cyh6_Ro&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=Ddrs6FXIJ-g&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=3zt40gdtW1M
+// https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5
+
 
 import processing.sound.*;
 SoundFile song1;
 SoundFile song2;
 SoundFile song3;
 SoundFile wind;
+SoundFile dungeon0;
 
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
@@ -41,6 +44,8 @@ Buttons Dropcontrols; // these are the buttons in the drop down menu when you cl
 Buttons Dropexit;
 Buttons DropMainMenu;
 
+Buttons proceedPopup;
+
 
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
@@ -61,6 +66,7 @@ void setup() {
   song2 = new SoundFile(this, "Song title 2.wav");
   song3 = new SoundFile(this, "Song title 3.wav");
   wind = new SoundFile(this, "WIND.wav");
+  dungeon0 = new SoundFile (this, "dungeon0.wav");
 
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
@@ -86,6 +92,8 @@ void setup() {
 
   starttext = new StartText ();
   dungeon = new Dungeon();
+  
+  proceedPopup = new Buttons(615, 160, 120, 40); // button for the popup for proceed in dungeon 0
 
 
 
@@ -154,12 +162,15 @@ void draw() {
     starttext.display5();// this function call displays the text box when the check goes through
     isClickPrompt = false;
   }
-  if (startText[0] > 5 && dungeonRooms [0] == 0 && master[0] != 1) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
+  if (startText[0] > 5 && dungeonRooms [0] == 0 && master[0] != 1 ) { // checks if the start text is greater than 5 and if the dungeon rooms are at 0
     isClickPrompt = false;
     starttext.prompt();
     dungeon.display0();
+    if(dungeon.isPopupOpen == true){ // this is the if statement to check if the boolean created inside the dungeon class is true, if it is then 
+    proceedPopup.buttons();
+    }
   }
-  if (isClickPrompt == true) { // this checks if the boolean is true and then runs the click prompt code
+  if (isClickPrompt == true && dungeonRooms[0] < 1) { // this checks if the boolean is true and then runs the click prompt code
     starttext.click();
   }
 
@@ -172,8 +183,9 @@ void draw() {
     isClickPrompt = true;
 
 
-    if (!wind.isPlaying()) { // makes sure the sfx does not overlap multiple times.
+    if (!wind.isPlaying() && !dungeon0.isPlaying()) { // makes sure the sfx does not overlap multiple times.
       wind.play();
+      dungeon0.play();
     }
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
@@ -277,5 +289,8 @@ void mousePressed() { // this houses all of the button presses which will prompt
 
   if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0) { // this is a if statement checking if the actual game is running, and then if the menus are off.
     startText[0] += 1;// sets the starting text [0] to +=1 each time pressed to intialize and continue starting text function
+  }
+  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0 && dungeon.isPopupOpen == true && proceedPopup.isMouseOver() == true){ // if statement checking if the actual game is running, and then if the menus are off. It then checks if the isPopupOpen boolean is true and the mouse is over
+    dungeonRooms[0] = 1; // if the conditional is true, then proceed with changing the value of the array which will change where the character is. 
   }
 }
