@@ -7,6 +7,7 @@ import processing.sound.*;
 SoundFile song1;
 SoundFile song2;
 SoundFile song3;
+SoundFile wind;
 
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
@@ -51,6 +52,7 @@ void setup() {
   song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
   song2 = new SoundFile(this, "Song title 2.wav");
   song3 = new SoundFile(this, "Song title 3.wav");
+  wind = new SoundFile(this, "WIND.wav");
 
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
@@ -121,6 +123,10 @@ void draw() {
     song1.stop(); //these .stops stop the music when entering the new phase so that it does not over lap with the music for the dungeon.
     song2.stop();
     song3.stop();
+    
+    if (!wind.isPlaying()){ // makes sure the sfx does not overlap multiple times.
+     wind.play();
+    }
     if (goUp == true) { // the if statement checks if the boolean for going up is true, then will call the function for the movement which in in the player class.
       player.displayUp();
     }
@@ -181,6 +187,12 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
 }
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
+
+
+//////////////////////////////
+///// title screen ///////////
+/////////////////////////////
+
   if (master[0] == 1 && play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
     master[0] = 2;
   }
@@ -196,6 +208,12 @@ void mousePressed() { // this houses all of the button presses which will prompt
       titlemusic[0] = 1; // if statement triggers by seeing that it is over 3 it will hard push the index value back down to 1;
     }
   }
+  
+  /////////////////////////////
+  ////// when in game   ////////
+  //////////////////////////////
+  
+  
   if (master [0] == 2 && isDropMenuOpen == true && DropMainMenu.isMouseOver() == true) { //this is the if statement to check the master array and if the drop menu is true, then if the mouse is over the button execute what is inside the if statment
     master [0] = 1; // this sets the master array back to the main menu
     isDropMenuOpen = false; // this changes the boolean for the drop menu to be false so that when the player clicks play again the drop menu is not still open.
