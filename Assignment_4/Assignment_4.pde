@@ -1,6 +1,8 @@
 // music links
 // https://www.youtube.com/watch?v=cLX0cyh6_Ro&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=Ddrs6FXIJ-g&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
+// https://www.youtube.com/watch?v=3zt40gdtW1M
+
 import processing.sound.*;
 SoundFile song1;
 SoundFile song2;
@@ -10,7 +12,8 @@ boolean goUp = false; // very basic forms of movement for players, each booleans
 boolean goDown = false;
 boolean goLeft = false;
 boolean goRight = false;
-boolean sprint = false; // this boolean is a conditional to augment the speed which the player can move when they press a certain key while moving, it is set to false right now to ensure that the players speed is normal and only when pressing the key will the player be able to "sprint"
+boolean sprint = false;// this boolean is a conditional to augment the speed which the player can move when they press a certain key while moving, it is set to false right now to ensure that the players speed is normal and only when pressing the key will the player be able to "sprint"
+boolean isMenuOpen = false; // this is a boolean to check if the menu is open or closed. it will switch on and off depending on where it is in the game
 
 Player player; // intialization of the player class which holds the sprites of the player
 TitleScreen titlescreen; //initialization of the titlescreen class which holds everything in the title screen
@@ -37,7 +40,7 @@ void setup() {
   ///////////////////////////
 
   song1 = new SoundFile(this, "Song title 1.wav"); // importing the songs used for the games title screen
-  song2 = new SoundFile(this, "Song title 2.wav"); 
+  song2 = new SoundFile(this, "Song title 2.wav");
   song3 = new SoundFile(this, "Song title 3.wav");
 
   ///////////////////////////////////////////////////////////////
@@ -52,7 +55,7 @@ void setup() {
   npc1 = new NPC1();
   npc2 = new NPC2();
 
-  music = new TitleButtons (816, 514, 50, 50);
+  music = new TitleButtons (816, 514, 50, 50); //These are the "fake" buttons which exist but are hidden from the player, they use the Pos and Size0
   controls = new TitleButtons (158, 501, 120, 20);
   play = new TitleButtons (127, 462, 60, 20);
   exit = new TitleButtons (127, 535, 60, 20);
@@ -116,6 +119,13 @@ void draw() {
       player.displayRight();
     }
   }
+  if (master [0] == 3) { // the if statement checks if the master array index value [0] is at 3 and then runs based off of that.
+    menu.display(); // this displays the menu
+    isMenuOpen = !isMenuOpen;
+    if (key == TAB) { // this checks if the key tab is clicked and if the boolean is true 
+      master [0] = 1; // this needs some work
+    }
+  }
 }
 
 void keyPressed() { // the void keypressed holds all of the movement code and code which will shift the master array from [1] (actual gameplauy)  to [4] (menu)
@@ -149,10 +159,13 @@ void keyReleased() { // the void keyReleased holds all of the negative of the mo
 
 void mousePressed() { // this houses all of the button presses which will prompt the game into going into a different state. Since mouse pressed stays forever unlike key pressed this is the best way of creating buttons.
   if (master[0] ==1 & play.isMouseOver() == true) { // This is a if statement to check if the mouse is over the play button, if it is then when mouse is pressed move the index value by 1 which then shifts game state into the main game
-    master[0] +=1;
+    master[0] = 2;
   }
   if (master [0] == 1 & exit.isMouseOver() == true) { //this is a if statement to check if the mouse is over the exit button, if it is then when mouse is pressed execute the exit() function which closes the game.
     exit();
+  }
+  if (master [0] == 1 & controls.isMouseOver() == true) {
+    master [0] = 3;
   }
   if (music.isMouseOver() == true) { // this is to check if the mouse is over the music button
     titlemusic[0] +=1; // this shifts the array that effects that music, by +1 each time.
