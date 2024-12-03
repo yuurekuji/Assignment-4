@@ -4,6 +4,9 @@
 // https://www.youtube.com/watch?v=3zt40gdtW1M
 // https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5
 
+// asset links
+// https://bkx1.itch.io/combat-rpg-1000k-characters
+
 
 import processing.sound.*;
 SoundFile song1;
@@ -31,6 +34,7 @@ GameOver gameover; // initializes the game over class
 Controls controlmenu;
 NPC1 npc1; // holds the npc1 class
 NPC2 npc2; // holds the npc 2 class
+NPC3 npc3; // holds the npc 2 class
 StartText starttext; // holds all of the starting text in the game
 Dungeon dungeon;
 Buttons titlebuttons; // holds the buttons class
@@ -68,6 +72,8 @@ void setup() {
   wind = new SoundFile(this, "WIND.wav");
   dungeon0 = new SoundFile (this, "dungeon0.wav");
 
+  titlemusic[0] = 1;
+
   ///////////////////////////////////////////////////////////////
   /////////////// initalize all of the classes //////////////////
   ///////////////////////////////////////////////////////////////
@@ -92,7 +98,7 @@ void setup() {
 
   starttext = new StartText ();
   dungeon = new Dungeon();
-  
+
   proceedPopup = new Buttons(615, 160, 120, 40); // button for the popup for proceed in dungeon 0
 
 
@@ -102,7 +108,7 @@ void setup() {
 
 void restartGame() { // this is where all of the intialization of the arrays and the variables will be located, by calling this function it theoretically will reset all of the values to a point where you can play the game again.
   master[0] = 1;
-  titlemusic[0] = 1;
+
   startText [0] = -1;
   dungeonRooms [0] = 0;
 }
@@ -166,8 +172,8 @@ void draw() {
     isClickPrompt = false;
     starttext.prompt();
     dungeon.display0();
-    if(dungeon.isPopupOpen == true){ // this is the if statement to check if the boolean created inside the dungeon class is true, if it is then 
-    proceedPopup.buttons();
+    if (dungeon.isPopupOpen == true) { // this is the if statement to check if the boolean created inside the dungeon class is true, if it is then
+      proceedPopup.buttons();
     }
   }
   if (isClickPrompt == true && dungeonRooms[0] < 1) { // this checks if the boolean is true and then runs the click prompt code
@@ -290,7 +296,7 @@ void mousePressed() { // this houses all of the button presses which will prompt
   if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0) { // this is a if statement checking if the actual game is running, and then if the menus are off.
     startText[0] += 1;// sets the starting text [0] to +=1 each time pressed to intialize and continue starting text function
   }
-  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0 && dungeon.isPopupOpen == true && proceedPopup.isMouseOver() == true){ // if statement checking if the actual game is running, and then if the menus are off. It then checks if the isPopupOpen boolean is true and the mouse is over
-    dungeonRooms[0] = 1; // if the conditional is true, then proceed with changing the value of the array which will change where the character is. 
+  if (master [0] == 2 && isDropMenuOpen == false && isMenuOpen == false && dungeonRooms [0] == 0 && dungeon.isPopupOpen == true && proceedPopup.isMouseOver() == true) { // if statement checking if the actual game is running, and then if the menus are off. It then checks if the isPopupOpen boolean is true and the mouse is over
+    dungeonRooms[0] = 1; // if the conditional is true, then proceed with changing the value of the array which will change where the character is.
   }
 }

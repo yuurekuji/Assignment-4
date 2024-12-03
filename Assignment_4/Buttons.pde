@@ -9,7 +9,7 @@ class Buttons {
   void buttons() { // this is the function to draw the buttons, the rect uses both pos and size in order to have dynamic buttons
     rectMode(CENTER);
     noStroke();
-    fill(255, 255, 255, 0);
+    fill(255, 255, 255, 255);
     rect(pos.x, pos.y, size.x, size.y);
   }
   boolean isMouseOver() { // this is a boolean function which is called in if statements in the main code to check if the mouses position is over the button. If it is ture then this boolean will be changed accordingly in the conditionals
