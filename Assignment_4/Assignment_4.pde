@@ -62,6 +62,9 @@ Buttons Npc1;
 Buttons Npc2;
 Buttons Npc3;
 
+Blood blood;
+BloodyParticles bloodyparticles;
+
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
 int [] startText = new int [1]; // this is the initialization of the starting text boxes
@@ -119,6 +122,8 @@ void setup() {
   npc1 = new NPC1();
   npc2 = new NPC2();
   npc3 = new NPC3();
+  bloodyparticles = new BloodyParticles();
+  blood = new Blood();
 
   ///////////////////////////////////
   ////// create the buttons   ///////
@@ -319,6 +324,11 @@ void draw() {
         battleui.display1();
         Fight.buttons();
         playerhp = playerhp-(0.005*frameCount/100 ); // do this instead of the turn based combat as to simulate an actual boss fight I wanted to add agency and a sense of mortal danger instead. This makes it so that the players HP bar will gradually decrease over time and cause the player to die if they are not careful.
+        if (bosshp < 200) { // this is a if statement which checks if the hp of the boss is under half, if it is then make the boss spew out blood.
+          bloodyparticles.logic();
+          bloodyparticles.drawBlood();
+        }
+
       }
 
       if (!bossMusic.isPlaying()) {
