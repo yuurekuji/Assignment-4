@@ -3,6 +3,8 @@ class Dungeon {
   PImage rooms []; // PImage array of the rooms
   PImage popup; // PImage of the proceed popup
 
+  PImage bossTexts[];
+
 
 
   PVector gatePos; // position pvector of the gate
@@ -21,6 +23,13 @@ class Dungeon {
 
     rooms [0] = loadImage("dungeon0.png");
     isPopupOpen = false;
+
+    bossTexts = new PImage[3]; // this initializes and creates the array to store the different text boxes
+
+    bossTexts[0] = loadImage("bosstext1.png");
+    bossTexts[1] = loadImage("bosstext2.png");
+    bossTexts[2] = loadImage("bosstext3.png");
+    
   }
   void display0() {
     image(rooms[0], pos.x, pos.y); // displays the room at dungeon 0
@@ -34,8 +43,14 @@ class Dungeon {
       }
     }
   }
-  
-  void display1() {
-    
-  }  
+
+  void text1() {
+    image(bossTexts[0], pos.x, pos.y);
+  }
+  void text2() {
+    image(bossTexts[1], pos.x, pos.y);
+  }
+  void text3() {
+    image(bossTexts[2], pos.x, pos.y);
+  }
 }

@@ -4,9 +4,11 @@
 // https://www.youtube.com/watch?v=3zt40gdtW1M
 // https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5 by tim beek
 // https://www.youtube.com/watch?v=25ibY0-wXlc
+// https://www.youtube.com/watch?v=2HG5Ky6NHqw
 
 // asset links
 // https://bkx1.itch.io/combat-rpg-1000k-characters
+// https://octopathtraveler.fandom.com/wiki/Galdera?file=Galdera.png from octopath traveler
 
 
 import processing.sound.*;
@@ -16,6 +18,7 @@ SoundFile song3;
 SoundFile wind;
 SoundFile dungeon0;
 SoundFile roar;
+SoundFile bossMusic;
 
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
@@ -69,6 +72,8 @@ int [] NPC1 = new int [1];
 int [] NPC2 = new int [1];
 int [] NPC3 = new int [1];
 
+int[] bosstext = new int [1];
+
 void setup() {
   size(900, 600);
   imageMode(CENTER);
@@ -85,6 +90,7 @@ void setup() {
   wind = new SoundFile(this, "WIND.wav");
   dungeon0 = new SoundFile (this, "dungeon0.wav");
   roar = new SoundFile (this, "roar.wav");
+  bossMusic = new SoundFile (this, "bossMusic.wav");
 
   titlemusic[0] = 1;
 
@@ -143,6 +149,8 @@ void restartGame() { // this is where all of the intialization of the arrays and
   NPC1 [0] = 0;
   NPC2 [0] = 0;
   NPC3 [0] = 0;
+
+  bosstext [0] = 0;
 }
 
 
@@ -259,13 +267,30 @@ void draw() {
     }
   }
 
-  if (dungeonRooms[0] == 1) {
+  if (dungeonRooms[0] == 1) { // this stops old music and makes it so that the background is blacked out.
     dungeon0.stop();
     background (0);
 
-    if (!roar.isPlaying()) {
+    if (!roar.isPlaying()) { //this plays a monster roar
       roar.play();
       roar.rate(0.5);
+    }
+
+    if (bosstext[0] == 1) {
+      dungeon.text1();
+    }
+    if (bosstext[0] == 2) {
+      dungeon.text2();
+    }
+    if (bosstext[0] == 3) {
+      dungeon.text3();
+    }
+    if (bosstext[0] > 3) {
+      roar.stop();
+      battleui.display1();
+      if(!bossMusic.isPlaying()){
+        bossMusic.play();
+      }
     }
   }
 
@@ -435,4 +460,12 @@ void mousePressed() { // this houses all of the button presses which will prompt
   if (dungeonRooms [0] == 0 && Npc3.isMouseOver()==true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
     NPC3[0] += 1;
   }
+    //////////////////////////////
+  //////// npc 3 ///////////////
+  //////////////////////////////
+
+  if (dungeonRooms [0] == 1) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
+    bosstext[0] +=1;
+  }
+  
 }
