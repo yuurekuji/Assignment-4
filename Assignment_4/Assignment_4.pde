@@ -62,8 +62,12 @@ Buttons Npc1;
 Buttons Npc2;
 Buttons Npc3;
 
+Buttons reset;
+
 Blood blood;
 BloodyParticles bloodyparticles;
+
+
 
 int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
@@ -149,6 +153,7 @@ void setup() {
 
   Fight = new Buttons (742, 546, 240, 70);
 
+  reset = new Buttons (732, 565, 240, 60);
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
 }
@@ -191,6 +196,16 @@ void draw() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  if (master[0] == 4) {
+    gameover.gameover();
+    reset.buttons();
+  }
+  if (master[0] == 5) {
+    gameover.gamewin();
+    reset.buttons();
+  }
+
   if (master[0] == 1) {
     titlescreen.display(); // display all of the items that must be shown and function in the title screen
     music.buttons();
@@ -328,7 +343,6 @@ void draw() {
           bloodyparticles.logic();
           bloodyparticles.drawBlood();
         }
-
       }
 
       if (!bossMusic.isPlaying()) {
@@ -518,5 +532,10 @@ void mousePressed() { // this houses all of the button presses which will prompt
 
   if (dungeonRooms [0] == 1 && isInBattle == true && Fight.isMouseOver() == true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
     bosshp -= 2.5; // everytime you press the button subtract 5 from the enemyHP bar
+  }
+  
+  
+  if (master[0] == 4 || master [0] == 5 && reset.isMouseOver() == true){
+    restartGame();
   }
 }
