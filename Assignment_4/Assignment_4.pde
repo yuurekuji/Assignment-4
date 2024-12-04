@@ -507,6 +507,6 @@ void mousePressed() { // this houses all of the button presses which will prompt
   //////////////////////////////
 
   if (dungeonRooms [0] == 1 && isInBattle == true && Fight.isMouseOver() == true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
-    bosshp -= 3; // everytime you press the button subtract 5 from the enemyHP bar
+    bosshp -= 2.5; // everytime you press the button subtract 5 from the enemyHP bar
   }
 }
