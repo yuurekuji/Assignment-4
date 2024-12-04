@@ -34,4 +34,8 @@ class BattleUI {
     stroke(0);
     rect(600, 450, 250, 20);
   }
+  
+  void Battle(){
+    
+  }
 }
