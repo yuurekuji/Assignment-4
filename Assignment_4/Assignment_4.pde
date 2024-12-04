@@ -3,6 +3,7 @@
 // https://www.youtube.com/watch?v=Ddrs6FXIJ-g&list=PLwJjxqYuirCLkq42mGw4XKGQlpZSfxsYd&index=18
 // https://www.youtube.com/watch?v=3zt40gdtW1M
 // https://www.youtube.com/watch?v=6BSIR8s-3S8&list=PLfP6i5T0-DkLcbzGEh9o6Qz2lXzOUFQCu&index=5 by tim beek
+// https://www.youtube.com/watch?v=25ibY0-wXlc
 
 // asset links
 // https://bkx1.itch.io/combat-rpg-1000k-characters
@@ -14,6 +15,7 @@ SoundFile song2;
 SoundFile song3;
 SoundFile wind;
 SoundFile dungeon0;
+SoundFile roar;
 
 boolean goUp = false; // very basic forms of movement for players, each booleans check for if a key is pressed, and when the key is pressed the boolean will be turned to true later which will cause the actual movement.
 boolean goDown = false;
@@ -82,6 +84,7 @@ void setup() {
   song3 = new SoundFile(this, "Song title 3.wav");
   wind = new SoundFile(this, "WIND.wav");
   dungeon0 = new SoundFile (this, "dungeon0.wav");
+  roar = new SoundFile (this, "roar.wav");
 
   titlemusic[0] = 1;
 
@@ -258,35 +261,41 @@ void draw() {
 
   if (dungeonRooms[0] == 1) {
     dungeon0.stop();
+    background (0);
+
+    if (!roar.isPlaying()) {
+      roar.play();
+      roar.rate(0.5);
+    }
   }
 
   /////////////////////////
   ////// NPC 1   //////////
   /////////////////////////
 
-  if (dungeonRooms[0] == 0 && NPC1[0] == 1) {
-    npc1.display1();
+  if (dungeonRooms[0] == 0 && NPC1[0] == 1) { // this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
+    npc1.display1(); // function to draw text.
   }
-  if (dungeonRooms[0] == 0 && NPC1[0] == 2) {
+  if (dungeonRooms[0] == 0 && NPC1[0] == 2) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc1.display2();
   }
-  if (dungeonRooms[0] == 0 && NPC1[0] == 3) {
+  if (dungeonRooms[0] == 0 && NPC1[0] == 3) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc1.display3();
   }
-  if (dungeonRooms[0] == 0 && NPC1[0] > 3) {
+  if (dungeonRooms[0] == 0 && NPC1[0] > 3) {// this resets the function so that the player can talk with them again
     NPC1[0] = 0;
   }
   /////////////////////////
   ////// NPC 2   //////////
   /////////////////////////
 
-  if (dungeonRooms[0] == 0 && NPC2[0] == 1) {
+  if (dungeonRooms[0] == 0 && NPC2[0] == 1) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc2.display1();
   }
-  if (dungeonRooms[0] == 0 && NPC2[0] == 2) {
+  if (dungeonRooms[0] == 0 && NPC2[0] == 2) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc2.display2();
   }
-  if (dungeonRooms[0] == 0 && NPC2[0] > 2) {
+  if (dungeonRooms[0] == 0 && NPC2[0] > 2) {// this resets the function so that the player can talk with them again
     NPC2[0] = 0;
   }
 
@@ -294,19 +303,19 @@ void draw() {
   ////// NPC 3   //////////
   /////////////////////////
 
-  if (dungeonRooms[0] == 0 && NPC3[0] == 1) {
+  if (dungeonRooms[0] == 0 && NPC3[0] == 1) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc3.display1();
   }
-  if (dungeonRooms[0] == 0 && NPC3[0] == 2) {
+  if (dungeonRooms[0] == 0 && NPC3[0] == 2) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc3.display2();
   }
-  if (dungeonRooms[0] == 0 && NPC3[0] == 3) {
+  if (dungeonRooms[0] == 0 && NPC3[0] == 3) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc3.display3();
   }
-  if (dungeonRooms[0] == 0 && NPC3[0] == 4) {
+  if (dungeonRooms[0] == 0 && NPC3[0] == 4) {// this checks if the dungeon rooms is currently correct which means set at 0, it then checks the npc text array and if it is correct it will use function
     npc3.display4();
   }
-  if (dungeonRooms[0] == 0 && NPC3[0] > 4) {
+  if (dungeonRooms[0] == 0 && NPC3[0] > 4) {// this resets the function so that the player can talk with them again
     NPC3[0] = 0;
   }
 

@@ -36,5 +36,6 @@ class Dungeon {
   }
   
   void display1() {
+    
   }  
 }
