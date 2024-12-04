@@ -28,6 +28,7 @@ boolean sprint = false;// this boolean is a conditional to augment the speed whi
 boolean isMenuOpen = false; // this is a boolean to check if the menu is open or closed. it will switch on and off depending on where it is in the game
 boolean isDropMenuOpen = false; // this is a boolean to check if the dropmenu is open or closed. it will switch on and off depending on where it is in the game
 boolean isClickPrompt = false; // this is a boolean to check if the click prompt is open or closed. it will switch on and off depending on if needed.
+boolean isInBattle = false; // this is a boolean to check if the player is in battle.
 
 
 
@@ -55,6 +56,8 @@ Buttons DropMainMenu;
 
 Buttons proceedPopup;
 
+Buttons Fight;
+
 Buttons Npc1;
 Buttons Npc2;
 Buttons Npc3;
@@ -63,6 +66,7 @@ int [] master = new int [1]; // this is the initialization of the master array
 int [] titlemusic = new int [1]; // this is the initialization of the music array
 int [] startText = new int [1]; // this is the initialization of the starting text boxes
 int [] dungeonRooms = new int [1]; // this intializaes the dungeon rooms
+
 
 //////////////////
 //   NPC text ////
@@ -74,11 +78,19 @@ int [] NPC3 = new int [1];
 
 int[] bosstext = new int [1];
 
+///////////////////
+///  HPS Value  ///
+///////////////////
+
+float playerhp;
+float bosshp;
+
 void setup() {
   size(900, 600);
   imageMode(CENTER);
 
 
+  frameRate(60);
 
   ///////////////////////////
   ///// import sound  ///////
@@ -130,6 +142,8 @@ void setup() {
   Npc2 = new Buttons(584, 464, 70, 80);
   Npc3 = new Buttons(626, 167, 90, 85);
 
+  Fight = new Buttons (742, 546, 240, 70);
+
 
   restartGame(); // call the restartGame fuction at the start to begin the game and the array indexs
 }
@@ -151,12 +165,24 @@ void restartGame() { // this is where all of the intialization of the arrays and
   NPC3 [0] = 0;
 
   bosstext [0] = 0;
+
+  playerhp = 100;
+  bosshp = 400;
 }
 
 
 void draw() {
   background(230); // this is to set the background as white
 
+  if (playerhp <=0) {
+    master[0] = 4;
+    bossMusic.stop();
+  }
+
+  if (bosshp <=0) {
+    master[0] = 5;
+    bossMusic.stop();
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////   Different conditionals for each state of the game ///////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,7 +293,7 @@ void draw() {
     }
   }
 
-  if (dungeonRooms[0] == 1) { // this stops old music and makes it so that the background is blacked out.
+  if (dungeonRooms[0] == 1 && master[0] == 2) { // this stops old music and makes it so that the background is blacked out.
     dungeon0.stop();
     background (0);
 
@@ -287,8 +313,15 @@ void draw() {
     }
     if (bosstext[0] > 3) {
       roar.stop();
-      battleui.display1();
-      if(!bossMusic.isPlaying()){
+
+      isInBattle = true;
+      if (isInBattle == true) {
+        battleui.display1();
+        Fight.buttons();
+        playerhp = playerhp-(0.005*frameCount/100 ); // do this instead of the turn based combat as to simulate an actual boss fight I wanted to add agency and a sense of mortal danger instead. This makes it so that the players HP bar will gradually decrease over time and cause the player to die if they are not careful.
+      }
+
+      if (!bossMusic.isPlaying()) {
         bossMusic.play();
       }
     }
@@ -460,12 +493,20 @@ void mousePressed() { // this houses all of the button presses which will prompt
   if (dungeonRooms [0] == 0 && Npc3.isMouseOver()==true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
     NPC3[0] += 1;
   }
-    //////////////////////////////
+  //////////////////////////////
   //////// npc 3 ///////////////
   //////////////////////////////
 
   if (dungeonRooms [0] == 1) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
     bosstext[0] +=1;
   }
-  
+
+
+  //////////////////////////////
+  //////// FIGHT ///////////////
+  //////////////////////////////
+
+  if (dungeonRooms [0] == 1 && isInBattle == true && Fight.isMouseOver() == true) { //this checks if the dungeon rooms is in the correct place and then checks if the mouse is over the button before clicking
+    bosshp -= 3; // everytime you press the button subtract 5 from the enemyHP bar
+  }
 }
